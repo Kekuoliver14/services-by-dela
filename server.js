@@ -111,4 +111,4 @@ app.post('/admin/job',adminRequired,async(req,res)=>{ const fee=Number(req.body.
 
 app.get('/api/health',async(req,res)=>{ let db='local'; if(pool){ try{ await pool.query('SELECT 1'); db=dbReady?'postgres':'postgres-not-ready'; }catch{db='postgres-error';} } res.json({ok:db!=='postgres-error',service:'Services by Dela',database:db}); });
 
-(async()=>{ try{ if(pool) await initDb(); else { const d=localLoad(); if(!fs.existsSync(LOCAL_DATA)) localSave(d); } app.listen(PORT,()=>console.log('Services by Dela running on '+PORT+' database='+(dbReady?'postgres':'local'))); } catch(err){ console.error('Startup error',err); process.exit(1); } })();
+(async()=>{ try{ if(pool) await initDb(); else { const d=localLoad(); if(!fs.existsSync(LOCAL_DATA)) localSave(d); } app.listen(PORT,'0.0.0'()=>{.log('Services by Dela running on '+PORT+' database='+(dbReady?'postgres':'local'))); } catch(err){ console.error('Startup error',err); process.exit(1); } })();
